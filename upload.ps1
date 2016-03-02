@@ -24,13 +24,12 @@ if($LASTEXITCODE -ne 0)
 $ps = "[$j]" | ConvertFrom-Json
 
 # if we don't have the cookbook in the environment we need to add it.
-
+$ps.cookbook_versions | Add-Member -type NoteProperty -name $name -value "= $version" -force
 
 # if we already have the cookbook we simply need to update the version.
 
 
 # compress and encode the newly tweak json file ready for uploading to the Chef server.
-$ps.cookbook_versions | Add-Member -type NoteProperty -name $name -value "= $version" -force
 $newJson = $ps | ConvertTo-Json -Compress
 $newJson | Out-File update.json -Encoding UTF8
 $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding($False)

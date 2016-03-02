@@ -1,4 +1,3 @@
-
 Param(
   [string]$name ,
   [string]$version,
@@ -7,7 +6,7 @@ Param(
 
 # delete temp file.
 $temp_file = "_update.json"
-if (Test-Path  (temp_file))
+if (Test-Path  ($temp_file))
 {
     del $temp_file
 }
@@ -23,11 +22,15 @@ if($LASTEXITCODE -ne 0)
 # read in the contents of the cookbook versions as an array.
 $ps = "[$j]" | ConvertFrom-Json
 
+# Check for $ps.cookbook_versions.$name and up date to $version
 # if we don't have the cookbook in the environment we need to add it.
+# if we do then we need to update it
+
+if ($ps.cookbook_versions -eq $null) {
+    $ps | Add-Member -type NoteProperty -name cookbook_versions -value $(New-Object -type Object)
+}
+
 $ps.cookbook_versions | Add-Member -type NoteProperty -name $name -value "= $version" -force
-
-# if we already have the cookbook we simply need to update the version.
-
 
 # compress and encode the newly tweak json file ready for uploading to the Chef server.
 $newJson = $ps | ConvertTo-Json -Compress

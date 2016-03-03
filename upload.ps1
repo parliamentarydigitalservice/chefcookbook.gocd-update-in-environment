@@ -20,7 +20,7 @@ function Upload-Environment
             & knife environment show $environment -F json
         }
         else {
-            Get-Content $file
+            Get-Content $(Resolve-Path $file)
         }
     }
 
@@ -66,7 +66,7 @@ function Upload-Environment
         }
 
         if ($file -ne $null -and $file -ne "") {
-            Save-EnvironmentToFile $file
+            Save-EnvironmentToFile $(Resolve-Path $file)
         }
         else {
             $target = [System.IO.Path]::GetTempFileName()

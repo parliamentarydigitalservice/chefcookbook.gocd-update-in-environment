@@ -37,12 +37,10 @@ function Upload-Environment
                 -value $(New-Object -type Object)
         }
 
-        if ($env.cookbook_versions.$name -eq $null) {
-            $env.cookbook_versions | Add-Member -type NoteProperty `
-                -name $name `
-                -value "= $version" `
-                -force
-        }
+        $env.cookbook_versions | Add-Member -type NoteProperty `
+            -name $name `
+            -value "= $version" `
+            -force
     }
 
     # ====== Save-Environment ====== #

@@ -52,7 +52,6 @@ function Upload-Environment
     function Save-Environment($env)
     {
         $newJson = $env | ConvertTo-Json -Compress
-        echo $newJson
 
         function Save-EnvironmentToFile($target) {
             $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding($False)

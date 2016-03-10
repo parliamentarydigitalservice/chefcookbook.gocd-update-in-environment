@@ -66,8 +66,8 @@ function Upload-Environment
             Save-EnvironmentToFile $(Resolve-Path $file)
         }
         else {
-            $target = update.json
-            #$target = "$([System.IO.Path]::GetTempPath())chef-$([int][double]::Parse((Get-Date -UFormat %s))).json"
+            $scriptPath = Resolve-Path .
+            $target = "$scriptPath\environment.json" 
             Save-EnvironmentToFile $target
             Save-EnvironmentToChef $target
             del $target
